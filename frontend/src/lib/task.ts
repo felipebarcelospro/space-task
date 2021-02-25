@@ -10,9 +10,7 @@ export interface Task {
 }
 
 export const findAll = () => {
-  const { data, error, isValidating } = useFetch('/tasks', {
-    refreshInterval: 1000
-  })
+  const { data, error, isValidating } = useFetch('/tasks')
 
   return { data, error, isValidating }
 }
