@@ -1,0 +1,29 @@
+name: space-task
+
+services:
+- name: frontend
+  build_command: npm run build
+  environment_slug: node-js
+  source_dir: frontend
+  github:
+    branch: main
+    deploy_on_push: true
+    repo: felipebarcelospro/space-task
+  routes:
+  - path: /
+
+- name: sample-nodejs
+  build_command: npm run build
+  environment_slug: node-js
+  source_dir: api
+  http_port: 3001
+  github:
+    branch: main
+    deploy_on_push: true
+    repo: felipebarcelospro/space-task
+  routes:
+  - path: /api
+    
+  
+
+  
