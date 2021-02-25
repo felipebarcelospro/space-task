@@ -1,29 +1,42 @@
 name: space-task
-
+region: nyc
 services:
-- name: frontend
-  build_command: npm run build
+- build_command: npm run build
   environment_slug: node-js
-  source_dir: frontend
+  envs:
+  - key: API_URL
+    scope: RUN_AND_BUILD_TIME
+    value: http://localhost:3001
   github:
     branch: main
     deploy_on_push: true
     repo: felipebarcelospro/space-task
+  health_check:
+    http_path: /
+  http_port: 8080
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  name: frontend
   routes:
   - path: /
-
-- name: sample-nodejs
-  build_command: npm run build
+  source_dir: frontend
+  
+- build_command: npm run build
   environment_slug: node-js
-  source_dir: api
-  http_port: 3001
+  envs:
+  - key: DATABASE_URL
+    scope: RUN_AND_BUILD_TIME
+    value: file:./dev.db
   github:
     branch: main
     deploy_on_push: true
     repo: felipebarcelospro/space-task
+  health_check:
+    http_path: /
+  http_port: 3001
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  name: api
   routes:
   - path: /api
-    
-  
-
-  
+  source_dir: api
